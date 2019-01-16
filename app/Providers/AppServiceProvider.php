@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Client\ClientInterface;
+use App\Repositories\Client\ClientRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // registering client repository
+        $this->app->singleton(ClientInterface::class, ClientRepository::class);
     }
 }

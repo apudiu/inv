@@ -18,3 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('/clients')->group(function () {
+    Route::get('/', 'ClientController@index')->name('clients');
+    Route::get('/add', 'ClientController@create')->name('clients.create');
+    Route::post('/store', 'ClientController@store')->name('clients.store');
+});

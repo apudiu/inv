@@ -11,5 +11,31 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+mix
+    // disabling auto file (url) copy
+    .options({
+        processCssUrls: false
+    })
+
+    // combining plain style sheets
+    .styles([
+        'resources/css/font.css',
+        'resources/css/materialize.css',
+        'resources/css/bs4utility.css',
+        'resources/css/style.css'
+
+    ], 'public/css/app.css')
+
+    // compiling ES6 to ES5
+    .js('resources/js/app.js', 'public/tmp/a.js')
+
+    // combining plain JS
+    .scripts([
+        'public/tmp/a.js',
+        'resources/js/jquery.js',
+        'resources/js/materialize.js',
+        'resources/js/script.js'
+
+    ], 'public/js/app.js')
+
+;
