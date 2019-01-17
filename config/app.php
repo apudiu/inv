@@ -226,4 +226,31 @@ return [
 
     ],
 
+    // CUSTOM CONFIGURATIONS
+
+    // Image uploads
+    'image' => [
+
+        'client' => [
+
+            // resolution (in px)
+            'resolution' => [
+                'max_width' => 300,
+                'max_height'=> 300
+            ],
+
+            // file size (in KB)
+            'size' => [
+                'min' => 10,
+                'max' => 500
+            ],
+
+            // image extensions allowed to be uploaded
+            'allowed' => 'jpeg,jpg,png',
+
+            // image upload location
+            'upload_path' => 'uploads/client/'
+        ]
+    ]
+
 ];

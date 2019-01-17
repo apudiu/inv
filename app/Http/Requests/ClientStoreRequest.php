@@ -23,6 +23,12 @@ class ClientStoreRequest extends FormRequest
      */
     public function rules()
     {
+        $minSize = config('app.image.client.size.min');
+        $maxSize = config('app.image.client.size.max');
+        $maxWidth = config('app.image.client.resolution.max_width');
+        $maxHeight = config('app.image.client.resolution.max_height');
+        $allowedExts = config('app.image.client.allowed');
+
         return [
             'name' => 'required|string|min:3|max:80',
             'city' => 'required|min:5|max:40',
@@ -30,7 +36,8 @@ class ClientStoreRequest extends FormRequest
             'zip' => 'required|numeric|digits:4',
             'tax' => 'nullable|string|min:5|max:100',
             'note' => 'nullable|string|min:5|max:250',
-            'img' => 'nullable|image|mimes:jpeg,jpg,png|max:500|min:10|dimensions:max_width=300,max_height=300', // size in KB
+            'img' => "nullable|image|mimes:{$allowedExts}|min:{$minSize}|max:{$maxSize}|
+                      dimensions:max_width={$maxWidth},max_height={$maxHeight}",
         ];
     }
 

@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Http\Requests\ClientStoreRequest;
 use App\Repositories\Client\ClientInterface;
+use App\Traits\ImageHandleTrait;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    use ImageHandleTrait;
+
+
     // Client repository
     private $clientRepo;
 
@@ -52,13 +56,46 @@ class ClientController extends Controller
      */
     public function store(ClientStoreRequest $request)
     {
-        // preparing data
+        /// preparing data
         $data = [
-            'name' => $request->get(''),
-            'city' => $request->get(''),
-            'address' => $request->get(''),
-            'zip' => $request->get(''),
+            'name' => $request->get('name'),
+            'city' => $request->get('city'),
+            'address' => $request->get('address'),
+            'zip' => $request->get('zip'),
         ];
+
+        // handling optional params
+        if ($request->filled('tax')) {
+            $data['tax_id'] = $request->get('tax');
+        }
+
+        if ($request->filled('note')) {
+            $data['note'] = $request->get('note');
+        }
+
+        // uploading image if available
+        if ($request->hasFile('img')) {
+
+            // upload path
+            $path = config('app.image.client.upload_path');
+
+            $image = $request->file('img');
+
+            $uploadedName = $this->setUploadPath($path)->uploadImages([$image]);
+
+            $data['image'] = $uploadedName;
+        }
+
+        /// creating client
+
+        $client = $this->clientRepo->create($data);
+
+        /// Redirecting with notification
+
+        if ($client->id) {
+
+            return redirect()->route('clients');
+        }
     }
 
     /**

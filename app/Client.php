@@ -6,10 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $attributes = [
-        'id', 'name', 'city', 'address', 'tax_id', 'zip',
-        'note', 'image', 'created_at', 'updated_at'
+//    protected $attributes = [
+//        'id', 'name', 'city', 'address', 'tax_id', 'zip',
+//        'note', 'image', 'created_at', 'updated_at'
+//    ];
+
+    // mass assignable attrs
+    protected $fillable = [
+        'name', 'city', 'address', 'tax_id', 'zip', 'note', 'image'
     ];
+
+
 
     /*******************
      * Relationships

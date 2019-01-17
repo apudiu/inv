@@ -35,7 +35,7 @@
                                     <tr>
                                         <td>{{ $client->name }}</td>
                                         <td>{{ $client->city }}</td>
-                                        <td>{{ $client->created_at }}</td>
+                                        <td>{{ formatDateTime($client->created_at, true) }}</td>
                                         <td>
                                             <button class='dropdown-trigger btn btn-small blue-grey waves-effect'
                                                     data-target='d1'>Action</button>
