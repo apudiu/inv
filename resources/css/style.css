@@ -10,3 +10,47 @@
 .sidenav-overlay {
     z-index: 990;
 }
+
+/**
+ * Active nav item
+ */
+nav ul li.active {
+    background-color: rgba(84, 110, 122, 0.43);
+}
+
+/**
+ * Datepicker color fix
+ */
+/** each date button */
+.datepicker-day-button {
+    color: initial;
+}
+/** current days button */
+.datepicker-table td.is-today .datepicker-day-button{
+    color: #26a69a;
+}
+/** day selected */
+.datepicker-table td.is-selected .datepicker-day-button{
+    color: inherit;
+}
+
+/**
+ * CSS Spinner
+ */
+.spin {
+    animation: rotation 2s infinite linear;
+}
+
+label .spin {
+    font-size: 1rem;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+

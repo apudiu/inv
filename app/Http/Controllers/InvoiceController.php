@@ -3,10 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
+use App\Repositories\Client\ClientInterface;
+use App\Repositories\Invoice\InvoiceInterface;
 use Illuminate\Http\Request;
+use function MongoDB\BSON\toJSON;
 
 class InvoiceController extends Controller
 {
+    private $clientRepo,
+            $invoiceRepo;
+
+
+    public function __construct(ClientInterface $client, InvoiceInterface $invoice)
+    {
+        // requiring authentication
+        $this->middleware('auth');
+
+        $this->clientRepo = $client;
+        $this->invoiceRepo = $invoice;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +30,13 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+//        $invs = Invoice::with('entries')->get();
+//        dd($invs);
+        $data = [
+            'invoices' => []
+        ];
+
+        return view('invoice.invoices', $data);
     }
 
     /**
@@ -24,7 +46,15 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        //
+        $clients = $this->clientRepo->getAll();
+        $entryTypes = config('app.invoice.entry.types');
+
+        $data = [
+            'clients' => $clients,
+            'entryTypes' => $entryTypes
+        ];
+
+        return view('invoice.add-invoice', $data);
     }
 
     /**
@@ -35,7 +65,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

@@ -32,9 +32,31 @@
 <!-- Footer -->
 @include('layouts.partials._foot')
 
+<!-- nt -->
+<div id="noti-container" class="hiddendiv">
+</div>
+
 <!--  Scripts-->
 <script src="{{ asset('js/app.js') }}"></script>
+<!-- Notification -->
+<script>
+
+        @if(($nt=getFromSession('notification')))
+
+            let clss = {
+                'success': 'light-green darken-3',
+                'error' : 'deep-orange darken-3',
+                'info' : 'blue-grey'
+            };
+
+            M.toast({
+                html : '<div class="notification"><div class="title font-weight-bold">{{ $nt['title'] ?? "" }}</div><div>{{ $nt['body'] ?? "" }}</div></div>',
+                classes : clss.{{ $nt['type'] ?? 'info' }}
+            });
+        @endif
+</script>
 @yield('onpage-js')
+
 
 </body>
 </html>

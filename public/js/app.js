@@ -31644,13 +31644,20 @@ $jscomp.polyfill = function (e, r, p, m) {
 
 (function($){
     $(function(){
-        // initializing sidenav
+        /// initializing
+        // sidenav
         $('.sidenav').sidenav();
-
-        // initializing dropdown
-        $(".dropdown-trigger").dropdown({
+        // material boxed (lightbox)
+        $('.materialboxed').materialbox();
+        // dropdown
+        $('.dropdown-trigger').dropdown({
+            // place dropdown below the dropdown trigger element
             coverTrigger: false
         });
+        // selects
+        $('.form-select').formSelect();
+        // datepicker
+        $('.datepicker').datepicker();
 
     }); // end of document ready
 })(jQuery); // end of jQuery name space

@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Http\Requests\ClientStoreRequest;
+use App\Notifications\ClientAdded;
 use App\Repositories\Client\ClientInterface;
 use App\Traits\ImageHandleTrait;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 
 class ClientController extends Controller
 {
-    use ImageHandleTrait;
+    use ImageHandleTrait, Notifiable;
 
 
     // Client repository
@@ -19,6 +21,8 @@ class ClientController extends Controller
 
     public function __construct(ClientInterface $client)
     {
+        $this->middleware('auth');
+
         $this->clientRepo = $client;
     }
 
@@ -94,6 +98,9 @@ class ClientController extends Controller
 
         if ($client->id) {
 
+            // send notification
+            $this->notify(new ClientAdded($client));
+
             return redirect()->route('clients');
         }
     }
@@ -104,9 +111,15 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show($id)
     {
-        //
+        $client = $this->clientRepo->getById($id);
+
+        $data = [
+            'client' => $client
+        ];
+
+        return view('client.client', $data);
     }
 
     /**

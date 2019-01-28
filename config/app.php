@@ -251,6 +251,17 @@ return [
             // image upload location
             'upload_path' => 'uploads/client/'
         ]
-    ]
+    ],
+
+    // Invoice
+    'invoice' => [
+
+        'entry' => [
+
+            'types' => [
+                'hour','day','service','product','other'
+            ]
+        ],
+    ],
 
 ];

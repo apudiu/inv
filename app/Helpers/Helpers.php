@@ -92,6 +92,10 @@ function pullFromSession($sessionKey) {
 	return false;
 }
 
+function flashToSession($data, $name='notification') {
+    Session::flash($name, $data);
+}
+
 /**
  * Gets error message from a form submission error
  * @param	string	$name	field name under validation
@@ -351,7 +355,7 @@ function getAuthUser() {
 		return Auth::user();
 		
 	} else {
-		
+
 		return false;
 	}
 	
@@ -601,5 +605,14 @@ function userImage($imageName, string $userName, string $extension='png') :strin
 	$url = config('app.upload_dirs.user') . $imgName;
 	
 	return asset(str_replace('\\', '/', $url));
+}
+
+/**
+ * Returns client image path
+ * @param string $filename      the filename of the client logo
+ * @return string
+ */
+function clientImage($filename) {
+    return asset(config('app.image.client.upload_path') . $filename);
 }
 

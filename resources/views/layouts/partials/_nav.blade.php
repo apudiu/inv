@@ -7,16 +7,18 @@
 
             <!-- Full width menu -->
             <ul class="right hide-on-med-and-down">
-                <li><a href="#">Invoices</a></li>
+                <li class="{{ ifRoute('invoices', 'active') }}">
+                    <a href="{{ route('invoices') }}">Invoices</a>
+                </li>
                 <li><a href="#">Projects</a></li>
                 <li><a href="#">Estimates</a></li>
                 <li><a href="#">Recurrings</a></li>
-                <li class="{{ Route::is('clients') ? 'active' : '' }}">
+                <li class="{{ ifRoute('clients', 'active') }}">
                     <a href="{{ route('clients') }}">Clients</a>
                 </li>
                 <li>
                     <a class="dropdown-trigger" href="#!" data-target="menu-user">
-                        User Name<i class="material-icons right">arrow_drop_down</i>
+                        {{ getAuthUser()->name }}<i class="material-icons right">arrow_drop_down</i>
                     </a>
                     <ul id="menu-user" class="dropdown-content">
                         <li><a href="#!">Profile</a></li>

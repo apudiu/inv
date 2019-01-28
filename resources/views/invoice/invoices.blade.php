@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Welcome
+    Invoices
 @endsection
 
 @section('content')
@@ -12,10 +12,10 @@
             <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
                     <div class="card-title">
-                        <div class="ml-0 d-inline">Clients</div>
+                        <div class="ml-0 d-inline">Invoices</div>
                         <div class="mr-0 float-right">
                             <a class="btn btn-small waves-effect blue-grey" 
-                               href="{{ route('clients.create') }}">Add Client</a>
+                               href="{{ route('invoices.create') }}">Add Invoice</a>
                         </div>
                     </div>
 
@@ -23,33 +23,31 @@
                         <table class="responsive-table">
                             <thead>
                                 <tr>
-                                    <th>Company</th>
-                                    <th>City</th>
-                                    <th>Since</th>
-                                    <th>Actions</th>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Client</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                @forelse($clients as $client)
+                                @forelse($invoices as $invoice)
                                     <tr>
-                                        <td>{{ $client->name }}</td>
-                                        <td>{{ $client->city }}</td>
-                                        <td>{{ formatDateTime($client->created_at, true) }}</td>
+                                        <td>{{ $invoice->id }}</td>
+                                        <td>{{ formatDateTime($invoice->created_at, true) }}</td>
+                                        <td>{{ $invoice->client->name }}</td>
+                                        <td>{{ $invoice->client->name }}</td>
+                                        <td>{{ $invoice->client->name }}</td>
                                         <td>
-                                            {{--<button class='dropdown-trigger btn btn-small blue-grey waves-effect'--}}
-                                                    {{--data-target='d1'>Action</button>--}}
-                                            {{--<ul id='d1' class='dropdown-content'>--}}
-                                                {{--<li><a href="#!">Edit</a></li>--}}
-                                                {{--<li><a href="#!">View</a></li>--}}
-                                            {{--</ul>--}}
-                                            <a href="{{ route('clients.show', $client->id) }}"
+                                            <a href="{{ route('invoices.show', $invoice->id) }}"
                                                class='btn btn-small blue-grey waves-effect'>View</a>
                                         </td>
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="4" class="center">No clients available</td>
+                                        <td colspan="6" class="center">No invoice available</td>
                                     </tr>
                                 @endforelse
                             </tbody>

@@ -7,7 +7,12 @@ use Illuminate\Database\Migrations\Migration;
 class CreateInvoiceEntriesTable extends Migration
 {
     // Quantity types
-    private $types = ['hours','days','services','products','others'];
+    private $types;
+
+    public function __construct()
+    {
+        $this->types = config('app.invoice.entry.types');
+    }
 
     /**
      * Run the migrations.

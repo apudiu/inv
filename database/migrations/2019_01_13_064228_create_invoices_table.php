@@ -26,7 +26,7 @@ class CreateInvoicesTable extends Migration
             // FK
             $table->unsignedInteger('client_id');
 
-            $table->string('p_o_no')->unique();
+            $table->string('p_o_no')->unique()->nullable();
             $table->enum('type', $this->types)->default($this->types[0]);
             $table->enum('status', $this->statuses)->default($this->statuses[0]);
 

@@ -20,9 +20,9 @@ class CreatePersonsTable extends Migration
             $table->unsignedInteger('client_id');
 
             $table->string('name');
-            $table->string('surname');
+            $table->string('surname')->nullable();
             $table->string('email')->unique();
-            $table->string('phone')->unique();
+            $table->string('phone')->unique()->nullable();
             $table->string('designation')->nullable();
             $table->string('department')->nullable();
             $table->text('note')->nullable();

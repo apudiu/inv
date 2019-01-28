@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use App\Repositories\Client\ClientInterface;
 use App\Repositories\Client\ClientRepository;
+use App\Repositories\Invoice\InvoiceInterface;
+use App\Repositories\Invoice\InvoiceRepository;
+use App\Repositories\Person\PersonInterface;
+use App\Repositories\Person\PersonRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,5 +31,12 @@ class AppServiceProvider extends ServiceProvider
     {
         // registering client repository
         $this->app->singleton(ClientInterface::class, ClientRepository::class);
+
+        // registering person repository
+        $this->app->singleton(PersonInterface::class, PersonRepository::class);
+
+        // registering invoice repository
+        $this->app->singleton(InvoiceInterface::class, InvoiceRepository::class);
+
     }
 }
