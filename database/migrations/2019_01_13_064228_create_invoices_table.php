@@ -6,12 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateInvoicesTable extends Migration
 {
-    // invoice type
-    private $types = ['estimate','invoice'];
-
-    // statuses
-    private $statuses = ['draft','partial','billed','accepted'];
-
 
     /**
      * Run the migrations.
@@ -20,15 +14,21 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        // invoice type
+        $types = config('app.invoice.type');
+
+        // statuses
+        $statuses = config('app.invoice.status');
+
+        Schema::create('invoices', function (Blueprint $table) use ($types, $statuses) {
             $table->increments('id');
 
             // FK
             $table->unsignedInteger('client_id');
 
             $table->string('p_o_no')->unique()->nullable();
-            $table->enum('type', $this->types)->default($this->types[0]);
-            $table->enum('status', $this->statuses)->default($this->statuses[0]);
+            $table->enum('type', $types)->default($types[0]);
+            $table->enum('status', $statuses)->default($statuses[0]);
 
             $table->timestamps();
 

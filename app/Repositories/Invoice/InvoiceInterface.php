@@ -12,13 +12,14 @@ namespace App\Repositories\Invoice;
 interface InvoiceInterface
 {
     // get all
-    public function getAll();
+    // $with is list of relations to pull from
+    public function getAll(array $with = []);
 
     // get one by id
-    public function getById(int $id);
+    public function getById(int $id, array $with = []);
 
     // create one
-    public function create(array $attributes);
+    public function create(array $invoiceData, $entryData);
 
     // update one
     public function update(int $id, array $attributes);

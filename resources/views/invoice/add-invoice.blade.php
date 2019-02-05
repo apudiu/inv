@@ -52,7 +52,6 @@
         #g-total-val {
             width: 13%;
         }
-
     </style>
 @endsection
 
@@ -71,6 +70,18 @@
                         <hr>
                         <form action="{{ route('invoices.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @if($errors->count())
+                                <div class="row">
+                                    <div class="col s12 form-error-container">
+                                        <div class="font-weight-bold">Please correct following errors to proceed</div>
+                                        <ul>
+                                            @foreach($errors->all() as $er)
+                                                <li>{{ $er }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="row">
                                 <div class="input-field col s12 m7">
                                     <label for="client">Client
@@ -78,16 +89,13 @@
                                     </label>
                                     <select class="validate"
                                             id="client"
-                                            name="client"
-                                            required>
+                                            name="client">
                                         <option value="" disabled selected>Choose client</option>
                                         @forelse($clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }}</option>
                                         @empty
                                         @endforelse
                                     </select>
-                                    @component('components.form-error', ['name'=>'client'])
-                                    @endcomponent
                                 </div>
                                 <div class="input-field col s12 m5">
                                     <label for="date">Date
@@ -98,10 +106,7 @@
                                            id="date"
                                            placeholder="Select Date"
                                            name="date"
-                                           value="{{ old('date') }}"
-                                           required>
-                                    @component('components.form-error', ['name'=>'date'])
-                                    @endcomponent
+                                           value="{{ old('date') }}">
                                 </div>
                             </div>
                             <div class="row">
@@ -113,12 +118,9 @@
                                     <select class="validate"
                                             id="contact"
                                             name="contact[]"
-                                            multiple
-                                            required>
+                                            multiple>
                                         <option value="" disabled>Choose contact</option>
                                     </select>
-                                    @component('components.form-error', ['name'=>'contact'])
-                                    @endcomponent
                                 </div>
                                 <div class="input-field col s12 m3">
                                     <label for="pon">P.O. No.
@@ -129,8 +131,6 @@
                                            placeholder="P.O. Number"
                                            name="pon"
                                            value="{{ old('pon') }}">
-                                    @component('components.form-error', ['name'=>'pon'])
-                                    @endcomponent
                                 </div>
                                 <div class="input-field col s12 m3">
                                     <label for="iid">Invoice ID
@@ -142,8 +142,6 @@
                                            name="invid"
                                            value="{{ old('invid') }}"
                                            disabled>
-                                    @component('components.form-error', ['name'=>'invid'])
-                                    @endcomponent
                                 </div>
                             </div>
                             <div class="row">
@@ -182,14 +180,13 @@
                                                                     <div class="input-field col s5">
                                                                         <input class="white-text qt"
                                                                                type="text"
-                                                                               name="entry[1][qt]"
-                                                                               value="0"
-                                                                               required>
+                                                                               name="entry[1][qty]"
+                                                                               value="0">
+
                                                                     </div>
                                                                     <div class="input-field col s7">
                                                                         <select class="validate white-text inv-entry-first"
-                                                                                name="entry[1][type]"
-                                                                                required>
+                                                                                name="entry[1][qt_type]">
                                                                             @foreach($entryTypes as $entry)
                                                                                 <option value="{{ $entry }}">{{ $entry }}</option>
                                                                             @endforeach
@@ -210,8 +207,7 @@
                                                                         <input class="white-text price"
                                                                                type="text"
                                                                                name="entry[1][price]"
-                                                                               value="0"
-                                                                               required>
+                                                                               value="0">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -236,7 +232,7 @@
                             <div class="row">
                                 <div class="col s12 center">
                                     <button type="reset" class="btn waves-effect white darken-2 black-text text-lighten-2">Reset</button>
-                                    <button type="submit" class="btn waves-effect light-blue darken-2">Add</button>
+                                    <button type="submit" class="btn waves-effect light-blue darken-2">Create Invoice</button>
                                 </div>
                             </div>
 
@@ -265,14 +261,12 @@
                         <div class="input-field col s5">
                             <input class="white-text qt"
                                    type="text"
-                                   name="entry[index][qt]"
-                                   value="0"
-                                   required>
+                                   name="entry[index][qty]"
+                                   value="0">
                         </div>
                         <div class="input-field col s7">
                             <select class="validate white-text inv-entry-type"
-                                    name="entry[index][type]"
-                                    required>
+                                    name="entry[index][qt_type]">
                                 @foreach($entryTypes as $entry)
                                     <option value="{{ $entry }}">{{ $entry }}</option>
                                 @endforeach
@@ -293,8 +287,7 @@
                             <input class="white-text price"
                                    type="text"
                                    name="entry[index][price]"
-                                   value="0"
-                                   required>
+                                   value="0">
                         </div>
                     </div>
                 </td>
@@ -448,29 +441,6 @@
 
             });
 
-            /**
-             * Calculates invoice entries total & places in Grand total
-             * @param gTotalValueElemId
-             * @param totalElemClass
-             */
-            function calculateGTotal(gTotalValueElemId, totalElemClass) {
-
-                // g total elem
-                let gtElem = $(gTotalValueElemId);
-
-                // all rows total
-                let sum = 0;
-                $(totalElemClass).map((index, item) => {
-
-                    let n = parseInt(item.innerText);
-
-                    if (n > 0) {
-                        sum += n;
-                    }
-                });
-
-                gtElem.text(sum);
-            }
         });
     </script>
 @endsection

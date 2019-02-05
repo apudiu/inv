@@ -13,17 +13,27 @@ class Invoice extends Model
 //        'created_at', 'updated_at'
 //    ];
 
+    protected $fillable = [
+        'client_id', 'p_o_no', 'type', 'status'
+    ];
+
+
     /*******************
      * Relationships
      ******************/
 
     // belongs to clients
-    public function clients() {
+    public function client() {
         return $this->belongsTo(Client::class);
     }
 
     // has many invoice entries
     public function entries() {
         return $this->hasMany(InvoiceEntry::class);
+    }
+
+    // has many contact/persons (many to many)
+    public function persons() {
+        return $this->belongsToMany(Person::class);
     }
 }

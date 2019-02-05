@@ -27,4 +27,9 @@ class Person extends Model
     public function client() {
         return $this->belongsTo(Client::class);
     }
+
+    // belongs to many invoices
+    public function invoices() {
+        return $this->belongsToMany(Invoice::class);
+    }
 }

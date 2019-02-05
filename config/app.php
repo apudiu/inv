@@ -250,7 +250,7 @@ return [
 
             // image upload location
             'upload_path' => 'uploads/client/'
-        ]
+        ],
     ],
 
     // Invoice
@@ -260,7 +260,15 @@ return [
 
             'types' => [
                 'hour','day','service','product','other'
-            ]
+            ],
+        ],
+
+        'type' => [
+            'invoice', 'estimate'
+        ],
+
+        'status' => [
+            'due', 'draft', 'partial', 'billed'
         ],
     ],
 

@@ -38,8 +38,8 @@
                                         <td>{{ $invoice->id }}</td>
                                         <td>{{ formatDateTime($invoice->created_at, true) }}</td>
                                         <td>{{ $invoice->client->name }}</td>
-                                        <td>{{ $invoice->client->name }}</td>
-                                        <td>{{ $invoice->client->name }}</td>
+                                        <td>{{ $invoice->amount }}</td>
+                                        <td>{{ $invoice->status }}</td>
                                         <td>
                                             <a href="{{ route('invoices.show', $invoice->id) }}"
                                                class='btn btn-small blue-grey waves-effect'>View</a>

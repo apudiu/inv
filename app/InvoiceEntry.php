@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class InvoiceEntry extends Model
 {
-    protected $attributes = [
-        'id', 'invoice_id', 'price', 'qty',
-        'qt_type', // enum (hours, days, services, products, others)
-        'description', 'created_at', 'updated_at'
+//    protected $attributes = [
+//        'id', 'invoice_id', 'price', 'qty',
+//        'qt_type', // enum (hours, days, services, products, others)
+//        'description', 'created_at', 'updated_at'
+//    ];
+    protected $fillable = [
+        'invoice_id', 'price', 'qty', 'qt_type', 'description'
     ];
 
     /*******************

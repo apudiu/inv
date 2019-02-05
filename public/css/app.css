@@ -10455,3 +10455,13 @@ label .spin {
     }
 }
 
+/**
+ * Form error (all errors in a single element
+ */
+.form-error-container {
+    border: 1px dashed rgba(231, 0, 0, 0.62);
+    color: rgba(236, 72, 23, 0.87);
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+

@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InvoiceStoreRequest;
 use App\Invoice;
+use App\Notifications\InvoiceAdded;
 use App\Repositories\Client\ClientInterface;
 use App\Repositories\Invoice\InvoiceInterface;
+use function foo\func;
 use Illuminate\Http\Request;
-use function MongoDB\BSON\toJSON;
+use Illuminate\Notifications\Notifiable;
 
 class InvoiceController extends Controller
 {
+    use Notifiable;
+
     private $clientRepo,
             $invoiceRepo;
 
@@ -30,10 +35,32 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-//        $invs = Invoice::with('entries')->get();
-//        dd($invs);
+        // eager loading related models for invoice (conf)
+        $eagerloadInvs = ['entries:invoice_id,qty,price', 'client:id,name'];
+
+        // getting invoices with related models
+        $invs = $this->invoiceRepo->getAll($eagerloadInvs);
+
+        // adding 'amount' to each invoice
+        $invs = $invs->map(function($invoice) {
+
+            // summing each entry (qty * price)
+            $inv = $invoice->entries->map(function($entry) {
+
+                // returning only the sum
+                return ($entry->qty * $entry->price);
+            });
+
+            // assigning each entries sum to new attribute (amount)
+            $invoice->amount = $inv->sum();
+
+            // return the modified model
+            return $invoice;
+        });
+
+
         $data = [
-            'invoices' => []
+            'invoices' => $invs,
         ];
 
         return view('invoice.invoices', $data);
@@ -63,20 +90,47 @@ class InvoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InvoiceStoreRequest $request)
     {
-        dd($request->all());
+        /// preparing data
+        $invoiceData = [
+            'client_id' => $request->get('client'),
+            'p_o_no' => $request->get('pon'),
+            'contact' => $request->get('contact'),
+        ];
+
+        $entryData = $request->get('entry');
+
+        /// creating model
+        $invoice = $this->invoiceRepo->create($invoiceData, $entryData);
+
+        /// Redirecting with notification
+        if ($invoice->id) {
+
+            // notify
+            $this->notify(new InvoiceAdded($invoice));
+
+            return redirect()->back();
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Invoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @param $invoiceId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Invoice $invoice)
+    public function show($invoiceId)
     {
-        //
+        // eager related
+        $related = ['entries', 'client', 'persons'];
+        $invoice = $this->invoiceRepo->getById($invoiceId, $related);
+
+        $data = [
+            'invoice' => $invoice
+        ];
+
+        return view('invoice.invoice', $data);
     }
 
     /**
