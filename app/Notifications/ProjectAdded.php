@@ -2,44 +2,45 @@
 
 namespace App\Notifications;
 
-use App\Invoice;
+use App\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class InvoiceAdded extends Notification
+class ProjectAdded extends Notification
 {
     use Queueable;
 
-    private $invoice;
+    private $project;
+
 
     /**
      * Create a new notification instance.
      *
-     * @param Invoice $invoice
+     * @return void
      */
-    public function __construct(Invoice $invoice)
+    public function __construct(Project $project)
     {
-        $this->invoice = $invoice;
+        $this->project = $project;
     }
 
     /**
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
+     * @return void
      */
     public function via($notifiable)
     {
         // flashing notification data to session
         flashToSession($this->message());
-
     }
 
     private function message() {
         return [
-            'title' => "Invoice Added",
-            'body' => "Invoice#{$this->invoice->id} has been added.",
+            'title' => "Project Added",
+            'body' => "{$this->project->name} - has been added.",
             'type' => 'success' // success, error, info
         ];
     }

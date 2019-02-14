@@ -8,6 +8,8 @@ use App\Repositories\Invoice\InvoiceInterface;
 use App\Repositories\Invoice\InvoiceRepository;
 use App\Repositories\Person\PersonInterface;
 use App\Repositories\Person\PersonRepository;
+use App\Repositories\Project\ProjectInterface;
+use App\Repositories\Project\ProjectRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -37,6 +39,9 @@ class AppServiceProvider extends ServiceProvider
 
         // registering invoice repository
         $this->app->singleton(InvoiceInterface::class, InvoiceRepository::class);
+
+        // registering Project repository
+        $this->app->singleton(ProjectInterface::class, ProjectRepository::class);
 
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Add Invoice
+    Add Project
 @endsection
 
 @section('onpage-css')
@@ -30,10 +30,10 @@
             width: 10%;
         }
         #inv-tbl th.qt {
-            width: 30%;
+            width: 15%;
         }
         #inv-tbl th.desc {
-            width: 40%;
+            width: 55%;
         }
         #inv-tbl th.price {
             width: 10%;
@@ -63,18 +63,30 @@
             <div class="card white darken-1">
                 <div class="card-content white-text">
                     <div class="card-title">
-                        <div class="ml-0 d-inline blue-grey-text">Add Invoice</div>
+                        <div class="ml-0 d-inline blue-grey-text">Add Project</div>
                     </div>
 
                     <div class="pb-2">
                         <hr>
-                        <form action="{{ route('invoices.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('projects.store') }}" method="POST">
                             @csrf
 
                             @component('components.form-error-list')
                             @endcomponent
                             <div class="row">
                                 <div class="input-field col s12 m7">
+                                    <label for="name">Name
+                                        <span class="red-text">*</span>
+                                    </label>
+                                    <input class="validate"
+                                           type="text"
+                                           id="name"
+                                           placeholder="Enter name"
+                                           name="name"
+                                           value="{{ old('name') }}"
+                                           required>
+                                </div>
+                                <div class="input-field col s12 m5">
                                     <label for="client">Client
                                         <span class="red-text">*</span>
                                     </label>
@@ -88,53 +100,19 @@
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="input-field col s12 m5">
-                                    <label for="date">Date
-                                        <span class="red-text">*</span>
-                                    </label>
-                                    <input class="validate datepicker"
-                                           type="text"
-                                           id="date"
-                                           placeholder="Select Date"
-                                           name="date"
-                                           value="{{ old('date') }}">
-                                </div>
                             </div>
                             <div class="row">
-                                <div class="input-field col s12 m6">
-                                    <label for="contact">Contact
+                                <div class="input-field col s12">
+                                    <label for="desc">Description.
                                         <span class="red-text">*</span>
-                                        <span class="material-icons spin" id="contact-loader">cached</span>
                                     </label>
-                                    <select class="validate"
-                                            id="contact"
-                                            name="contact[]"
-                                            multiple>
-                                        <option value="" disabled>Choose contact</option>
-                                    </select>
-                                </div>
-                                <div class="input-field col s12 m3">
-                                    <label for="pon">P.O. No.
-                                    </label>
-                                    <input class="validate"
-                                           type="text"
-                                           id="pon"
-                                           placeholder="P.O. Number"
-                                           name="pon"
-                                           value="{{ old('pon') }}">
-                                </div>
-                                <div class="input-field col s12 m3">
-                                    <label for="iid">Invoice ID
-                                    </label>
-                                    <input class="validate"
-                                           type="number"
-                                           id="iid"
-                                           placeholder="Invoice ID"
-                                           name="invid"
-                                           value="{{ old('invid') }}"
-                                           disabled>
+                                    <textarea id="desc" class="materialize-textarea validate"
+                                              placeholder="Project description"
+                                              name="description"
+                                              required>{{ old('description') }}</textarea>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col s12">
                                     <div class="card blue-grey darken-1">
@@ -153,9 +131,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="action">A.</th>
-                                                            <th class="qt">Qt</th>
+                                                            <th class="qt">Hours</th>
                                                             <th class="desc">Description</th>
-                                                            <th class="price">Price</th>
+                                                            <th class="price">Rate</th>
                                                             <th class="total-h">Total</th>
                                                         </tr>
                                                     </thead>
@@ -168,20 +146,12 @@
                                                             </td>
                                                             <td>
                                                                 <div class="row">
-                                                                    <div class="input-field col s5">
+                                                                    <div class="input-field col s12">
                                                                         <input class="white-text qt"
                                                                                type="text"
-                                                                               name="entry[1][qty]"
+                                                                               name="entry[1][hour]"
                                                                                value="0">
 
-                                                                    </div>
-                                                                    <div class="input-field col s7">
-                                                                        <select class="validate white-text inv-entry-first"
-                                                                                name="entry[1][qt_type]">
-                                                                            @foreach($entryTypes as $entry)
-                                                                                <option value="{{ $entry }}">{{ $entry }}</option>
-                                                                            @endforeach
-                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -197,7 +167,7 @@
                                                                     <div class="input-field col s12">
                                                                         <input class="white-text price"
                                                                                type="text"
-                                                                               name="entry[1][price]"
+                                                                               name="entry[1][rate]"
                                                                                value="0">
                                                                     </div>
                                                                 </div>
@@ -249,19 +219,11 @@
                 </td>
                 <td>
                     <div class="row">
-                        <div class="input-field col s5">
+                        <div class="input-field col s12">
                             <input class="white-text qt"
                                    type="text"
-                                   name="entry[index][qty]"
+                                   name="entry[index][hour]"
                                    value="0">
-                        </div>
-                        <div class="input-field col s7">
-                            <select class="validate white-text inv-entry-type"
-                                    name="entry[index][qt_type]">
-                                @foreach($entryTypes as $entry)
-                                    <option value="{{ $entry }}">{{ $entry }}</option>
-                                @endforeach
-                            </select>
                         </div>
                     </div>
                 </td>
@@ -277,7 +239,7 @@
                         <div class="input-field col s12">
                             <input class="white-text price"
                                    type="text"
-                                   name="entry[index][price]"
+                                   name="entry[index][rate]"
                                    value="0">
                         </div>
                     </div>
@@ -299,70 +261,7 @@
             // init dropdowns
             $('#client, #contact, .inv-entry-first').formSelect();
 
-            // getting contact list for selected client
-            $('#client').change(function() {
-
-                // selected client id
-                let clientId = this.value;
-
-                // persons dropdown
-                let personsDropDown = $('#contact');
-
-                // Request interceptor for handling something just after request is sent
-                const loadingSign = axios.interceptors.request.use((config) => {
-                    $('#contact-loader').css('display', 'inline-block');
-                    return config;
-
-                }, (error) => {
-                    console.error('Error on request interceptor');
-                    return Promise.reject(error);
-                });
-
-
-                // get contact persons for this client
-                axios.get('/persons/by_client/' + clientId)
-                    .then(function (response) {
-
-                        // contacts for the selected company
-                        let persons = response.data;
-
-                        // emptying previous contacts
-                        personsDropDown.empty();
-
-                        // inserting first item
-                        let nContacts = (persons.length >= 1) ? 'Choose contact' : 'No contacts available';
-                        personsDropDown.append(`<option value="" disabled>${nContacts}</option>`);
-
-                        $.each(persons, function(index, person) {
-
-                            // creating new option
-                            let newOpt = $('<option></option>').attr('value', person.id).text(person.name);
-
-                            // adding new options to the dropdown
-                            personsDropDown.append(newOpt);
-                        });
-                    })
-
-                    .catch(function (error) {
-                        console.error(error);
-                    })
-
-                    .then(function () {
-                        // always executed
-
-                        // removing interceptor
-                        axios.interceptors.request.eject(loadingSign);
-
-                        // re initiating the dropdown with updated options
-                        personsDropDown.formSelect();
-
-                        // hiding contact loader
-                        $('#contact-loader').hide();
-                    });
-
-            });
-
-            // Calculating total in invoice entries (using event delegation)
+            // Calculating total in entries (using event delegation)
             $('#inv-tbl').on('change keyup', function (e) {
 
                 // actual clicked element
@@ -385,7 +284,7 @@
                 calculateGTotal('#g-total-val', '.total');
             });
 
-            // removing invoice entry
+            // removing  entry
             $('#inv-tbl').on('click', function (e) {
 
                 // actual clicked element

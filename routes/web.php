@@ -50,3 +50,13 @@ Route::prefix('/invoices')->group(function () {
     Route::patch('/edit/{id}', 'InvoiceController@update')->name('invoices.update');
     Route::delete('/delete/{id}', 'InvoiceController@destroy')->name('invoices.delete');
 });
+
+Route::prefix('/projects')->group(function () {
+    Route::get('/', 'ProjectController@index')->name('projects');
+    Route::get('/add', 'ProjectController@create')->name('projects.create');
+    Route::post('/store', 'ProjectController@store')->name('projects.store');
+    Route::get('/show/{id}', 'ProjectController@show')->name('projects.show');
+    Route::get('/edit/{id}', 'ProjectController@edit')->name('projects.edit');
+    Route::patch('/edit/{id}', 'ProjectController@update')->name('projects.update');
+    Route::delete('/delete/{id}', 'ProjectController@destroy')->name('projects.delete');
+});

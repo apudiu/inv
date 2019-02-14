@@ -7,7 +7,6 @@ use App\Invoice;
 use App\Notifications\InvoiceAdded;
 use App\Repositories\Client\ClientInterface;
 use App\Repositories\Invoice\InvoiceInterface;
-use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 
@@ -109,9 +108,9 @@ class InvoiceController extends Controller
 
             // notify
             $this->notify(new InvoiceAdded($invoice));
-
-            return redirect()->back();
         }
+
+        return redirect()->back();
     }
 
     /**

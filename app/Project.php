@@ -6,11 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    protected $attributes = [
-        'id', 'client_id', 'name', 'description',
-        'status', // enum (draft, partial, billed)
-        'created_at', 'updated_at'
+//    protected $attributes = [
+//        'id', 'client_id', 'name', 'description',
+//        'status', // enum (draft, partial, billed)
+//        'created_at', 'updated_at'
+//    ];
+
+    protected $fillable = [
+        'client_id', 'name', 'description', 'status'
     ];
+
+
 
     /*******************
      * Relationships
