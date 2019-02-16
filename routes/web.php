@@ -49,6 +49,10 @@ Route::prefix('/invoices')->group(function () {
     Route::get('/edit/{id}', 'InvoiceController@edit')->name('invoices.edit');
     Route::patch('/edit/{id}', 'InvoiceController@update')->name('invoices.update');
     Route::delete('/delete/{id}', 'InvoiceController@destroy')->name('invoices.delete');
+
+    // estimates
+    Route::get('/estimates', 'InvoiceController@indexEstimate')->name('estimates');
+    Route::get('/estimates/show/{id}', 'InvoiceController@showEstimate')->name('estimates.show');
 });
 
 Route::prefix('/projects')->group(function () {

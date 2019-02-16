@@ -24,6 +24,7 @@ class InvoiceStoreRequest extends FormRequest
     public function rules()
     {
         $invoiceEntryTypes = implode(',', config('app.invoice.entry.types'));
+        $invoiceTypes = implode(',', config('app.invoice.type'));
 
         return [
             'client' => 'required|numeric|exists:clients,id',
@@ -31,6 +32,7 @@ class InvoiceStoreRequest extends FormRequest
             'contact' => 'required|array|min:1',
             'contact.*' => 'numeric|exists:persons,id',
             'pon' => 'nullable|string|min:3|max:30',
+            'type' => 'required|string|in:'.$invoiceTypes,
             'entry' => 'required|array|min:1',
             'entry.*' => 'required',
             'entry.*.qty' => 'numeric|min:1|digits_between:1,10',
@@ -51,6 +53,7 @@ class InvoiceStoreRequest extends FormRequest
             'date' => 'Date',
             'contact' => 'Contact',
             'pon' => 'P.O. No.',
+            'type' => 'Invoice Type',
             'entry.*.qty' => 'Quantity',
             'entry.*.qt_type' => 'Type',
             'entry.*.description' => 'Description',

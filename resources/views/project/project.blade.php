@@ -78,6 +78,8 @@
                                                         <div>
                                                             <span class="font-weight-bold">Project </span> #
                                                             {{ $project->id }}
+                                                            @component('components.status-badge', ['status' => $project->status])
+                                                            @endcomponent
                                                         </div>
                                                         <div>
                                                             <span class="font-weight-bold">Date of project:</span>

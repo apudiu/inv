@@ -268,7 +268,25 @@ return [
         ],
 
         'status' => [
-            'due', 'draft', 'partial', 'billed'
+            // invoice
+            'due', 'draft', 'partial', 'billed',
+            // estimate
+            'sent', 'accepted'
+        ],
+
+        'status_by_type' => [
+
+            'invoice' => [
+                'due', 'partial', 'billed',
+            ],
+
+            'estimate' => [
+                'draft', 'sent', 'accepted',
+            ],
+
+            'project' => [
+                'draft', 'billed'
+            ],
         ],
     ],
 

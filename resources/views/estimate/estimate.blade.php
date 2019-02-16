@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Invoice
+    Estimate
 @endsection
 
 @section('onpage-css')
@@ -35,10 +35,8 @@
             <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
                     <div class="card-title">
-                        <div class="ml-0 d-inline">Invoice Details</div>
+                        <div class="ml-0 d-inline">Estimate Details</div>
                         <div class="mr-0 float-right">
-                            {{--<a class="" --}}
-                               {{--href="{{ route('invoices.edit', $invoice->id) }}">Edit Invoice</a>--}}
                             <a class='dropdown-trigger btn btn-small waves-effect blue-grey'
                                data-target='invoice-edit'>
                                Actions <i class="material-icons right">arrow_drop_down</i>
@@ -50,6 +48,7 @@
                                 <li><a href="#!" id="print-btn">Print</a></li>
                                 <li><a href="#!" id="download-btn">Download</a></li>
                                 <li class="divider" tabindex="-1"></li>
+                                <li><a href="#!">To Invoice</a></li>
                                 <li><a href="#!">Change Stat.</a></li>
                                 <li class="divider" tabindex="-1"></li>
                                 <li><a href="#!">Edit</a></li>
@@ -75,14 +74,14 @@
                                                     </div>
                                                     <div class="col s12 m4">
                                                         <div>
-                                                            <span class="font-weight-bold">Invoice </span> #
-                                                            {{ $invoice->id }}
-                                                            @component('components.status-badge', ['status' => $invoice->status])
+                                                            <span class="font-weight-bold">Estimate </span> #
+                                                            {{ $estimate->id }}
+                                                            @component('components.status-badge', ['status' => $estimate->status])
                                                             @endcomponent
                                                         </div>
                                                         <div>
-                                                            <span class="font-weight-bold">Date of invoice:</span>
-                                                            {{ formatDateTime($invoice->created_at, true) }}
+                                                            <span class="font-weight-bold">Date of estimate:</span>
+                                                            {{ formatDateTime($estimate->created_at, true) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -91,15 +90,15 @@
                                                     <div class="col s12 m6">
                                                         <h6>To</h6>
                                                         <div class="font-weight-bold">
-                                                            {{ $invoice->client->name }}
+                                                            {{ $estimate->client->name }}
                                                         </div>
                                                         <div>
-                                                            <div>{{ $invoice->client->address }}</div>
-                                                            <div>{{ $invoice->client->city }} {{ $invoice->client->zip }}</div>
+                                                            <div>{{ $estimate->client->address }}</div>
+                                                            <div>{{ $estimate->client->city }} {{ $estimate->client->zip }}</div>
                                                         </div>
                                                         <div>
                                                             <ul>
-                                                                @forelse($invoice->persons as $person)
+                                                                @forelse($estimate->persons as $person)
 
                                                                     <li>
                                                                         <span class="font-weight-bold">
@@ -139,6 +138,7 @@
                                                             <thead>
                                                             <tr>
                                                                 <th>Qty</th>
+                                                                <th>Unit</th>
                                                                 <th>Description</th>
                                                                 <th>Price</th>
                                                                 <th>Total</th>
@@ -146,16 +146,17 @@
                                                             </thead>
                                                             <tbody>
 
-                                                                @forelse($invoice->entries as $entry)
+                                                                @forelse($estimate->entries as $entry)
                                                                     <tr>
                                                                         <td>{{ $entry->qty }}</td>
+                                                                        <td class="text-capitalize">{{ $entry->qt_type }}</td>
                                                                         <td>{{ $entry->description }}</td>
                                                                         <td>{{ $entry->price }}</td>
                                                                         <td class="entry-total">{{ $entry->qty * $entry->price }}</td>
                                                                     </tr>
                                                                 @empty
                                                                     <tr>
-                                                                        <td colspan="4" class="red-text">No entries available</td>
+                                                                        <td colspan="5" class="red-text">No entries available</td>
                                                                     </tr>
                                                                 @endforelse
                                                             </tbody>
@@ -204,7 +205,7 @@
             // printing
             $('#download-btn').click(function (e) {
                 // download as PDF file
-                printElement('invoice', 'Invoice_{{ $invoice->id }}');
+                printElement('invoice', 'Invoice_{{ $estimate->id }}');
 
             });
 

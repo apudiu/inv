@@ -37,9 +37,11 @@ class InvoiceAdded extends Notification
     }
 
     private function message() {
+        $type = ucfirst($this->invoice->type);
+
         return [
-            'title' => "Invoice Added",
-            'body' => "Invoice#{$this->invoice->id} has been added.",
+            'title' => "{$type} Added",
+            'body' => "{$type}#{$this->invoice->id} has been added.",
             'type' => 'success' // success, error, info
         ];
     }

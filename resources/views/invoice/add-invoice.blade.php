@@ -6,7 +6,7 @@
 
 @section('onpage-css')
     <style>
-        label[for="client"], label[for="contact"] {
+        label.dropdown-label {
             top: -25px;
             font-size: 0.85rem;
         }
@@ -75,7 +75,7 @@
                             @endcomponent
                             <div class="row">
                                 <div class="input-field col s12 m7">
-                                    <label for="client">Client
+                                    <label for="client" class="dropdown-label">Client
                                         <span class="red-text">*</span>
                                     </label>
                                     <select class="validate"
@@ -102,7 +102,7 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s12 m6">
-                                    <label for="contact">Contact
+                                    <label for="contact" class="dropdown-label">Contact
                                         <span class="red-text">*</span>
                                         <span class="material-icons spin" id="contact-loader">cached</span>
                                     </label>
@@ -124,15 +124,16 @@
                                            value="{{ old('pon') }}">
                                 </div>
                                 <div class="input-field col s12 m3">
-                                    <label for="iid">Invoice ID
+                                    <label for="type" class="dropdown-label">Type
+                                        <span class="red-text">*</span>
                                     </label>
-                                    <input class="validate"
-                                           type="number"
-                                           id="iid"
-                                           placeholder="Invoice ID"
-                                           name="invid"
-                                           value="{{ old('invid') }}"
-                                           disabled>
+                                    <select class="validate form-select"
+                                            id="type"
+                                            name="type">
+                                        @foreach($invoiceTypes as $type)
+                                            <option value="{{ $type }}">{{ ucfirst($type) }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
