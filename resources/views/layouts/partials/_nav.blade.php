@@ -16,7 +16,9 @@
                 <li class="{{ ifRoute('estimates', 'active') }}">
                     <a href="{{ route('estimates') }}">Estimates</a>
                 </li>
-                <li><a href="#">Recurrings</a></li>
+                <li class="{{ ifRoute('recurrings', 'active') }}">
+                    <a href="{{ route('recurrings') }}">Recurrings</a>
+                </li>
                 <li class="{{ ifRoute('clients', 'active') }}">
                     <a href="{{ route('clients') }}">Clients</a>
                 </li>
