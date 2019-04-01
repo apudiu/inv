@@ -45,6 +45,10 @@ label .spin {
     font-size: 1rem;
 }
 
+.hidden {
+    display: none;
+}
+
 @keyframes rotation {
     from {
         transform: rotate(0deg);

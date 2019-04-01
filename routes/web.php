@@ -53,11 +53,15 @@ Route::prefix('/invoices')->group(function () {
     // estimates
     Route::get('/estimates', 'InvoiceController@indexEstimate')->name('estimates');
     Route::get('/estimates/show/{id}', 'InvoiceController@showEstimate')->name('estimates.show');
+
+    // ajax
+    Route::get('/by_client/{clientId}', 'InvoiceController@getInvoiceByClient');
 });
 
 Route::prefix('/invoices/recurrings')->group(function () {
 
     Route::get('/', 'InvoiceRecurController@index')->name('recurrings');
+    Route::get('/add', 'InvoiceRecurController@create')->name('recurrings.create');
     Route::post('/store', 'InvoiceRecurController@store')->name('recurrings.store');
     Route::get('/show/{id}', 'InvoiceRecurController@show')->name('recurrings.show');
 

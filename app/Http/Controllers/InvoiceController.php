@@ -220,4 +220,37 @@ class InvoiceController extends Controller
     {
         //
     }
+
+
+    /**
+     * Get all invoices by a client
+     * accepts only AJAX request
+     *
+     * @param int $clientId
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    public function getInvoiceByClient(int $clientId, Request $request) {
+
+        // allow only AJAX calls
+        if (!$request->ajax()) {
+            return response('Only ajax calls allowed', 403);
+        }
+
+        // get all by client
+        $persons = $this->invoiceRepo->getAllByClient($clientId);
+
+        // filter desired invoices (inefficient doing it here but doing it anyway)
+        $persons = $persons
+            ->where('type', 'invoice')
+            ->whereIn('status', ['due', 'partial'])
+            ->map(function ($item, $kay) {
+                $item['creation_date'] = formatDateTime($item->created_at, true);
+
+                return $item;
+            })
+            ->all();
+
+        return response()->json($persons);
+    }
 }

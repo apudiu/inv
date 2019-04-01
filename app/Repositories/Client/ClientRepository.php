@@ -25,21 +25,23 @@ class ClientRepository implements ClientInterface
 
     /**
      * Get all clients
+     * @param array $with
      * @return Client[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getAll()
+    public function getAll(array $with=[])
     {
-        return $this->client->all();
+        return $this->client->with($with)->get();
     }
 
     /**
      * Get client by id
      * @param int $id
+     * @param array $with
      * @return mixed
      */
-    public function getById(int $id)
+    public function getById(int $id, array $with = [])
     {
-        return $this->client->findOrFail($id);
+        return $this->client->with($with)->findOrFail($id);
     }
 
     /**

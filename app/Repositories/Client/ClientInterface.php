@@ -12,10 +12,10 @@ namespace App\Repositories\Client;
 interface ClientInterface
 {
     // get all clients
-    public function getAll();
+    public function getAll(array $with = []);
 
     // get a client by id
-    public function getById(int $id);
+    public function getById(int $id, array $with = []);
 
     // create a client
     public function create(array $attributes);

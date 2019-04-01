@@ -104,7 +104,7 @@
                                 <div class="input-field col s12 m6">
                                     <label for="contact" class="dropdown-label">Contact
                                         <span class="red-text">*</span>
-                                        <span class="material-icons spin" id="contact-loader">cached</span>
+                                        <span class="material-icons spin" id="contact-loader">refresh</span>
                                     </label>
                                     <select class="validate"
                                             id="contact"

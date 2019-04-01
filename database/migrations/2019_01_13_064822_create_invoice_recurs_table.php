@@ -26,7 +26,8 @@ class CreateInvoiceRecursTable extends Migration
             $table->date('end_date');
             $table->integer('interval')->comment('in days');
             $table->enum('enabled', $this->allowed)->default($this->allowed[0]);
-            
+            $table->enum('send_invoice', $this->allowed)->default($this->allowed[1]);
+
             $table->timestamps();
 
             // FK constraint

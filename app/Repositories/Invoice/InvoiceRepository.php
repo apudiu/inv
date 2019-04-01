@@ -46,6 +46,16 @@ class InvoiceRepository implements InvoiceInterface
     }
 
     /**
+     * Get all persons
+     * @param int $clientId
+     * @return Invoice[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllByClient(int $clientId)
+    {
+        return $this->invoice->where('client_id', $clientId)->get();
+    }
+
+    /**
      * Create one
      * @param array $invoiceData
      * @param array $entryData

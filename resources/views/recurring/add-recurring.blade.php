@@ -89,15 +89,14 @@
                                         </select>
                                     </div>
                                     <div class="input-field col s12 m5">
-                                        <label for="contact" class="dropdown-label">Contact
+                                        <label for="invoice" class="dropdown-label">Invoice
                                             <span class="red-text">*</span>
-                                            <span class="material-icons spin" id="contact-loader">cached</span>
+                                            <span class="material-icons spin hidden" id="invoice-loader">refresh</span>
                                         </label>
                                         <select class="validate"
-                                                id="contact"
-                                                name="contact[]"
-                                                multiple>
-                                            <option value="" disabled>Choose contact</option>
+                                                id="invoice"
+                                                name="invoice">
+                                            <option value="" disabled>Choose Invoice</option>
                                         </select>
                                     </div>
                                 </div>
@@ -126,94 +125,48 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col s12">
-                                        <div class="card blue-grey darken-1">
-                                            <div class="card-content white-text">
-                                                <div class="card-title">
-                                                    <div class="ml-0 d-inline">Entries</div>
-                                                    <div class="mr-0 float-right">
-                                                        <button type="button" id="add-entry-btn"
-                                                                class="btn btn-small waves-effect blue-grey">Add</button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="pb-2">
-                                                    <hr>
-                                                    <table class="highlight" id="inv-tbl">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="action">A.</th>
-                                                            <th class="qt">Qt</th>
-                                                            <th class="desc">Description</th>
-                                                            <th class="price">Price</th>
-                                                            <th class="total-h">Total</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="pt-0 pb-0">
-                                                                <button type="button" class="waves-effect waves-orange btn-floating btn-flat blue-grey delete-entry-btn">
-                                                                    <i class="material-icons">delete</i>
-                                                                </button>
-                                                            </td>
-                                                            <td>
-                                                                <div class="row">
-                                                                    <div class="input-field col s5">
-                                                                        <input class="white-text qt"
-                                                                               type="text"
-                                                                               name="entry[1][qty]"
-                                                                               value="0">
-
-                                                                    </div>
-                                                                    <div class="input-field col s7">
-                                                                        <select class="validate white-text inv-entry-first"
-                                                                                name="entry[1][qt_type]">
-                                                                            @foreach($entryTypes as $entry)
-                                                                                <option value="{{ $entry }}">{{ $entry }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="input-field mt-0 mb-0">
-                                                                        <textarea class="white-text materialize-textarea"
-                                                                                  name="entry[1][description]"
-                                                                                  placeholder="Description"></textarea>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="row">
-                                                                    <div class="input-field col s12">
-                                                                        <input class="white-text price"
-                                                                               type="text"
-                                                                               name="entry[1][price]"
-                                                                               value="0">
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <span class="total">0</span>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col s12 text-right" id="g-total-txt">Total</div>
-                                                        <div class="col s12" id="g-total-val">0</div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
+                                    <div class="input-field col s12 m5">
+                                        <label for="int">Interval
+                                            <span class="red-text">*</span>
+                                        </label>
+                                        <input class="validate"
+                                               type="number"
+                                               id="int"
+                                               placeholder="Interval in Days"
+                                               name="interval"
+                                               value="{{ old('interval') }}">
+                                    </div>
+                                    <div class="input-field col s12 m3">
+                                        <label class="dropdown-label">Enabled
+                                        </label>
+                                        <div class="switch mt-3">
+                                            <label>
+                                                Off
+                                                <input type="checkbox"
+                                                       name="enabled"
+                                                       checked>
+                                                <span class="lever"></span>
+                                                On
+                                            </label>
                                         </div>
                                     </div>
+                                    <div class="input-field col s12 m4">
+                                        <label class="mt-1">
+                                            <input type="checkbox"
+                                                   class="filled-in"
+                                                   name="send"
+                                                   checked>
+                                            <span>Send Invoice Automatically
+
+                                            </span>
+                                        </label>
+                                    </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col s12 center">
                                         <button type="reset" class="btn waves-effect white darken-2 black-text text-lighten-2">Reset</button>
-                                        <button type="submit" class="btn waves-effect light-blue darken-2">Create Invoice</button>
+                                        <button type="submit" class="btn waves-effect light-blue darken-2">Create Recurring</button>
                                     </div>
                                 </div>
 
@@ -227,59 +180,6 @@
         </div>
     </div>
 
-    <!-- Hidden template for adding in the invoice -->
-    <div class="d-none" id="inv-entry-template">
-        <table>
-            <tbody>
-            <tr>
-                <td class="pt-0 pb-0">
-                    <button type="button" class="waves-effect waves-orange btn-floating btn-flat blue-grey delete-entry-btn">
-                        <i class="material-icons">delete</i>
-                    </button>
-                </td>
-                <td>
-                    <div class="row">
-                        <div class="input-field col s5">
-                            <input class="white-text qt"
-                                   type="text"
-                                   name="entry[index][qty]"
-                                   value="0">
-                        </div>
-                        <div class="input-field col s7">
-                            <select class="validate white-text inv-entry-type"
-                                    name="entry[index][qt_type]">
-                                @foreach($entryTypes as $entry)
-                                    <option value="{{ $entry }}">{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="input-field mt-0 mb-0">
-                        <textarea class="white-text materialize-textarea"
-                                  name="entry[index][description]"
-                                  placeholder="Description"></textarea>
-                    </div>
-                </td>
-                <td>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input class="white-text price"
-                                   type="text"
-                                   name="entry[index][price]"
-                                   value="0">
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <span class="total">0</span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
 @endsection
 
 @section('onpage-js')
@@ -287,7 +187,7 @@
         $(document).ready(function() {
 
             // init dropdowns
-            $('#client, #contact, .inv-entry-first').formSelect();
+            $('#client, #invoice').formSelect();
 
             // getting contact list for selected client
             $('#client').change(function() {
@@ -295,12 +195,12 @@
                 // selected client id
                 let clientId = this.value;
 
-                // persons dropdown
-                let personsDropDown = $('#contact');
+                // invoices dropdown
+                let invoicesDropDown = $('#invoice');
 
                 // Request interceptor for handling something just after request is sent
                 const loadingSign = axios.interceptors.request.use((config) => {
-                    $('#contact-loader').css('display', 'inline-block');
+                    $('#invoice-loader').css('display', 'inline-block');
                     return config;
 
                 }, (error) => {
@@ -310,26 +210,28 @@
 
 
                 // get contact persons for this client
-                axios.get('/persons/by_client/' + clientId)
+                axios.get('/invoices/by_client/' + clientId)
                     .then(function (response) {
 
-                        // contacts for the selected company
-                        let persons = response.data;
+                        // invoices for the selected company
+                        let invoices = response.data;
 
-                        // emptying previous contacts
-                        personsDropDown.empty();
+                        // emptying previous invoices
+                        invoicesDropDown.empty();
 
                         // inserting first item
-                        let nContacts = (persons.length >= 1) ? 'Choose contact' : 'No contacts available';
-                        personsDropDown.append(`<option value="" disabled>${nContacts}</option>`);
+                        let nInvoices = (invoices.length >= 1) ? 'Choose Invoice' : 'No Invoice available';
+                        invoicesDropDown.append(`<option value="" disabled>${nInvoices}</option>`);
 
-                        $.each(persons, function(index, person) {
+                        $.each(invoices, function(index, invoice) {
 
                             // creating new option
-                            let newOpt = $('<option></option>').attr('value', person.id).text(person.name);
+                            let newOpt = $('<option></option>')
+                                .attr('value', invoice.id)
+                                .text('#' + invoice.id + ' / ' + invoice.creation_date + ' / '+ invoice.status);
 
                             // adding new options to the dropdown
-                            personsDropDown.append(newOpt);
+                            invoicesDropDown.append(newOpt);
                         });
                     })
 
@@ -344,81 +246,11 @@
                         axios.interceptors.request.eject(loadingSign);
 
                         // re initiating the dropdown with updated options
-                        personsDropDown.formSelect();
+                        invoicesDropDown.formSelect();
 
                         // hiding contact loader
-                        $('#contact-loader').hide();
+                        $('#invoice-loader').hide();
                     });
-
-            });
-
-            // Calculating total in invoice entries (using event delegation)
-            $('#inv-tbl').on('change keyup', function (e) {
-
-                // actual clicked element
-                let element = e.target;
-
-                // affected row
-                let row = $(element).parents('tr').first();
-
-                // current qt
-                let qt = row.find('.qt').val();
-
-                // current price
-                let price = row.find('.price').val();
-
-                // updating total
-                let total = (qt * price);
-                row.find('.total').text(total);
-
-                // updating grand total
-                calculateGTotal('#g-total-val', '.total');
-            });
-
-            // removing invoice entry
-            $('#inv-tbl').on('click', function (e) {
-
-                // actual clicked element
-                let element = e.target;
-
-                // if clicked on delete button
-                let deleteBtn = $(element).parent('button').hasClass('delete-entry-btn');
-
-                if (deleteBtn) {
-
-                    // current row
-                    let row = $(element).parents('tr').first();
-
-                    // remove
-                    row.remove();
-
-                    // updating grand total
-                    calculateGTotal('#g-total-val', '.total');
-                }
-
-            });
-
-            // Adding new entry (row)
-            // index of entries
-            let eIndex = 2;
-
-            $('#add-entry-btn').click(() => {
-
-                // container
-                let container = $('#inv-tbl tbody');
-
-                // template
-                let row = $('#inv-entry-template tbody').html();
-                // placing indexes
-                row = row.replace(/index/g, eIndex);
-
-                // adding single row
-                container.append(row);
-
-                eIndex++;
-
-                // reinitializing invoice dropdown's
-                $('#inv-tbl .inv-entry-type').formSelect();
 
             });
 
