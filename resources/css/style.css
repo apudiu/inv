@@ -1,0 +1,70 @@
+.icon-block {
+    padding: 0 15px;
+}
+.icon-block .material-icons {
+    font-size: inherit;
+}
+/**
+ * sidebar nav overlay fix
+ */
+.sidenav-overlay {
+    z-index: 990;
+}
+
+/**
+ * Active nav item
+ */
+nav ul li.active {
+    background-color: rgba(84, 110, 122, 0.43);
+}
+
+/**
+ * Datepicker color fix
+ */
+/** each date button */
+.datepicker-day-button {
+    color: initial;
+}
+/** current days button */
+.datepicker-table td.is-today .datepicker-day-button{
+    color: #26a69a;
+}
+/** day selected */
+.datepicker-table td.is-selected .datepicker-day-button{
+    color: inherit;
+}
+
+/**
+ * CSS Spinner
+ */
+.spin {
+    animation: rotation 2s infinite linear;
+}
+
+label .spin {
+    font-size: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+/**
+ * Form error (all errors in a single element
+ */
+.form-error-container {
+    border: 1px dashed rgba(231, 0, 0, 0.62);
+    color: rgba(236, 72, 23, 0.87);
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+
